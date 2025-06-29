@@ -3,7 +3,7 @@ public class OperacaoResponse {
     private String mensagem;
     private String tipoConta;
     private double novoSaldo;
-    // Crie um construtor vazio e os getters e setters para o Jackson funcionar
+
     public OperacaoResponse() {}
     public String getMensagem() { return mensagem; }
     public void setMensagem(String mensagem) { this.mensagem = mensagem; }

@@ -5,31 +5,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController // Anotação que define esta classe como um Controller de API REST
-@RequestMapping("/api/contas") // Todas as requisições para este controller devem começar com /api/contas
+@RestController 
+@RequestMapping("/api/contas") 
 public class ContaController {
 
-    /**
-     * NOTA IMPORTANTE PARA O EXERCÍCIO:
-     * Para simplificar, este exemplo cria uma nova conta a cada requisição.
-     * Em um sistema real, você gerenciaria as contas existentes (buscando de um banco de dados
-     * ou de uma estrutura em memória, como um Map, para que o saldo persista entre as chamadas).
-     */
 
-    @PostMapping("/depositar") // Responde a requisições POST para /api/contas/depositar
+    @PostMapping("/depositar") 
     public OperacaoResponse depositar(@RequestBody OperacaoRequest request) {
-        // O @RequestBody converte automaticamente o JSON recebido para o objeto OperacaoRequest
-        ValidadorUser validador = new ValidadorUser(); // Instancia o validador
+        
+        ValidadorUser validador = new ValidadorUser(); 
 
-        // Usa a fábrica para criar a conta e a envolve no Proxy
+
         Conta conta = new ContaProxy(
             ContasFactory.criarConta(request.getTipoConta()), //
             validador
         ); //
 
-        conta.depositar(request.getValor()); // Executa a operação
+        conta.depositar(request.getValor()); 
 
-        // Cria e retorna o objeto de resposta. O Spring o converterá para JSON.
+
         return new OperacaoResponse(
             "Depósito realizado com sucesso!",
             conta.getTipo(),
@@ -37,7 +31,7 @@ public class ContaController {
         );
     }
 
-    @PostMapping("/sacar") // Responde a requisições POST para /api/contas/sacar
+    @PostMapping("/sacar") 
     public OperacaoResponse sacar(@RequestBody OperacaoRequest request) {
         ValidadorUser validador = new ValidadorUser(); //
         Conta conta = new ContaProxy(
@@ -45,7 +39,7 @@ public class ContaController {
             validador
         ); //
 
-        conta.sacar(request.getValor()); // Executa a operação
+        conta.sacar(request.getValor()); 
 
         return new OperacaoResponse(
             "Saque realizado com sucesso!",

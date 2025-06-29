@@ -12,7 +12,7 @@ public class SistemaLogin {
     public static void main(String[] args) {
         ValidadorUser validadorUser = new ValidadorUser();
 
-        // Create accounts through the factory and wrap them in a proxy
+
         Conta conta1 = new ContaProxy(ContasFactory.criarConta("corrente"), validadorUser);
         Conta conta2 = new ContaProxy(ContasFactory.criarConta("poupanca"), validadorUser);
         Conta conta3 = new ContaProxy(ContasFactory.criarConta("salario"), validadorUser);

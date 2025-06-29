@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import java.util.Observable;
 import java.util.Observer;
 
-// O Controller agora implementa Observer para "observar" o Model
+
 public class MainViewController implements Observer {
 
     @FXML private ComboBox<String> tipoContaComboBox;
@@ -18,7 +18,7 @@ public class MainViewController implements Observer {
     @FXML private Label saldoLabel;
 
     private final ApiClient apiClient = new ApiClient();
-    // O Controller agora tem uma instância do nosso ViewModel
+
     private final ContaViewModel viewModel = new ContaViewModel();
 
     @FXML
@@ -26,7 +26,7 @@ public class MainViewController implements Observer {
         tipoContaComboBox.getItems().addAll("corrente", "poupanca", "salario");
         tipoContaComboBox.setValue("corrente");
 
-        // O Controller se registra como um observador do ViewModel
+
         viewModel.addObserver(this);
     }
 
@@ -39,8 +39,7 @@ public class MainViewController implements Observer {
 
             OperacaoResponse response = apiClient.depositar(request);
 
-            // O Controller agora só atualiza o modelo.
-            // Ele não toca mais diretamente no label.
+
             viewModel.setSaldo(response.getNovoSaldo());
 
         } catch (NumberFormatException e) {
@@ -52,7 +51,7 @@ public class MainViewController implements Observer {
 
     @FXML
     private void handleSacarAction() {
-        // Implementação do saque segue o mesmo padrão
+
         try {
             OperacaoRequest request = new OperacaoRequest();
             request.setTipoConta(tipoContaComboBox.getValue());
@@ -68,14 +67,13 @@ public class MainViewController implements Observer {
         }
     }
 
-    // Este método é exigido pela interface Observer.
-    // Ele é chamado automaticamente quando o viewModel.notifyObservers() é executado.
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof ContaViewModel) {
-            // Pega o novo saldo do modelo e ATUALIZA A VIEW AQUI!
+
             double novoSaldo = ((ContaViewModel) o).getSaldo();
-            // Platform.runLater garante que a atualização da UI ocorra na thread correta
+
             Platform.runLater(() -> {
                 saldoLabel.setText("R$ " + String.format("%.2f", novoSaldo));
             });

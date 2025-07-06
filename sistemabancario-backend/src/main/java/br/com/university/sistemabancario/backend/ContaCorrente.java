@@ -8,26 +8,23 @@ package br.com.university.sistemabancario.backend;
  *
  * @author aluno
  */
-public class ContaCorrente implements Conta {
-    private double saldo;
+import jakarta.persistence.Entity;
+
+@Entity
+public class ContaCorrente extends Conta {
 
     @Override
     public void depositar(double valor) {
-        saldo += valor;
+        setSaldo(getSaldo() + valor);
     }
 
     @Override
     public void sacar(double valor) {
-        if (saldo >= valor) {
-            saldo -= valor;
+        if (getSaldo() >= valor) {
+            setSaldo(getSaldo() - valor);
         } else {
             System.out.println("Saldo insuficiente na Conta Corrente.");
         }
-    }
-
-    @Override
-    public double getSaldo() {
-        return saldo;
     }
 
     @Override

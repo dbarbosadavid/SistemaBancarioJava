@@ -1,0 +1,13 @@
+### 4. Transferir 150 da Conta Corrente (ID 1) para a Conta Poupança (ID 2)
+# @insecure
+POST https://localhost:8443/api/contas/transferir
+Content-Type: application/json
+
+{
+    "idContaOrigem": 1,
+    "idContaDestino": 2,
+    "valor": 150
+}
+### 5. Emitir extrato da Conta Corrente (ID 1)
+# @insecure
+GET https://localhost:8443/api/contas/1/extrato

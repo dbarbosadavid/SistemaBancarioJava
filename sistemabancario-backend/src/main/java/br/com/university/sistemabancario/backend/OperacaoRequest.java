@@ -6,7 +6,6 @@ public class OperacaoRequest {
     private String tipoConta;
     private double valor;
 
-    // Getters e Setters
     public Long getContaId() { return contaId; }
     public void setContaId(Long contaId) { this.contaId = contaId; }
     public String getTipoConta() { return tipoConta; }

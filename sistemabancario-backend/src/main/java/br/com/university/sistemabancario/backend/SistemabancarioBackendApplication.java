@@ -22,17 +22,16 @@ public CommandLineRunner initialData(UsuarioRepository usuarioRepository, ContaR
             novoUsuario.setSenha("123");
             novoUsuario.setContas(new java.util.ArrayList<>());
 
-            // Cria uma conta corrente para o usuário
+
             ContaCorrente contaC = new ContaCorrente();
             contaC.setUsuario(novoUsuario);
-            contaC.setSaldo(1000.0); // Saldo inicial
+            contaC.setSaldo(1000.0); 
             novoUsuario.getContas().add(contaC);
 
-            // --- ADICIONADO ---
-            // Cria uma conta poupança para o usuário
+
             ContaPoupanca contaP = new ContaPoupanca();
             contaP.setUsuario(novoUsuario);
-            contaP.setSaldo(500.0); // Saldo inicial
+            contaP.setSaldo(500.0); 
             novoUsuario.getContas().add(contaP);
 
             usuarioRepository.save(novoUsuario);

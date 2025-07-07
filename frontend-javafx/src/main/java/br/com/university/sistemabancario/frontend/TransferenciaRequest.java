@@ -5,7 +5,7 @@ public class TransferenciaRequest {
     private Long idContaDestino;
     private double valor;
 
-    // Getters e Setters
+
     public Long getIdContaOrigem() { return idContaOrigem; }
     public void setIdContaOrigem(Long idContaOrigem) { this.idContaOrigem = idContaOrigem; }
     public Long getIdContaDestino() { return idContaDestino; }

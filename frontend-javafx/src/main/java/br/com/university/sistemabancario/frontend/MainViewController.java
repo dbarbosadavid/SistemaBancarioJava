@@ -22,7 +22,7 @@ public class MainViewController implements Observer {
     @FXML private TextField usuarioTextField;
     @FXML private PasswordField senhaPasswordField;
     @FXML private Label statusLoginLabel;
-    @FXML private VBox painelOperacoes; // O contêiner para os controles de operação
+    @FXML private VBox painelOperacoes; 
     @FXML private ComboBox<String> tipoContaComboBox;
     @FXML private TextField valorTextField;
     @FXML private Label saldoLabel;
@@ -155,13 +155,10 @@ private void handleTransferirAction() {
         // Chama a API
         apiClient.transferir(request);
 
-        // Se chegou até aqui, a transferência deu certo
+
         exibirAlerta("Sucesso", "Transferência realizada com sucesso!");
 
-        // ATENÇÃO: Para atualizar o saldo na tela, precisaríamos fazer uma nova
-        // requisição para buscar o novo saldo da conta de origem, ou o back-end
-        // poderia retornar o novo saldo na resposta da transferência.
-        // Por enquanto, vamos apenas mostrar a mensagem de sucesso.
+
         valorTextField.clear();
         contaDestinoTextField.clear();
 
@@ -218,7 +215,6 @@ private void handleExtratoAction() {
     }
 }
     
-    // --- MÉTODOS AUXILIARES ---
 
     private OperacaoRequest criarOperacaoRequest() {
         String tipoSelecionado = tipoContaComboBox.getValue();
@@ -273,7 +269,7 @@ private void handleExtratoAction() {
     }
     
     private void exibirAlerta(String titulo, String mensagem) {
-        // Para alertas de sucesso, usamos o tipo INFORMATION
+
         Alert.AlertType tipoAlerta = titulo.toLowerCase().contains("sucesso") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR;
         Alert alert = new Alert(tipoAlerta);
         alert.setTitle(titulo);

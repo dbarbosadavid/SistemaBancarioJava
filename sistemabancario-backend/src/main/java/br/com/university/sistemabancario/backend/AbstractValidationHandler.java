@@ -3,10 +3,10 @@ package br.com.university.sistemabancario.backend;
 public abstract class AbstractValidationHandler {
     private AbstractValidationHandler nextHandler;
 
-    // Método para construir a "corrente"
+
     public AbstractValidationHandler setNext(AbstractValidationHandler handler) {
         this.nextHandler = handler;
-        return handler; // Retorna o próximo para facilitar o encadeamento
+        return handler; 
     }
 
     // O método que cada validador concreto irá implementar
@@ -15,7 +15,7 @@ public abstract class AbstractValidationHandler {
     // Método para passar para o próximo da corrente
     protected boolean handleNext(ValidationRequest request) {
         if (nextHandler == null) {
-            return true; // Fim da corrente, tudo foi validado com sucesso
+            return true; 
         }
         return nextHandler.handle(request);
     }

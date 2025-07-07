@@ -4,7 +4,7 @@ public class HoraValidatorHandler extends AbstractValidationHandler {
     @Override
     public boolean handle(ValidationRequest request) {
         System.out.println("Validando Hora...");
-        // CORREÇÃO: trocado getNome() por getHora()
+
         if (request.getHora() == null || request.getHora().isEmpty()) {
             System.out.println("Erro: Hora inválida.");
             return false;

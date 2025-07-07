@@ -23,15 +23,12 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
-    // --- NOVA RELAÇÃO ADICIONADA ---
     // Um usuário pode ter muitas contas.
     // mappedBy="usuario" diz que a entidade 'Conta' é a dona da relação.
     // fetch=FetchType.EAGER garante que as contas sejam carregadas junto com o usuário.
     @JsonManagedReference
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Conta> contas;
-
-    // Getters e Setters para todos os campos
 
     public Long getId() {
         return id;

@@ -12,7 +12,6 @@ public class OperacaoResponse {
         this.novoSaldo = novoSaldo;
     }
 
-    // Getters e Setters
     public String getMensagem() { return mensagem; }
     public void setMensagem(String mensagem) { this.mensagem = mensagem; }
     public String getTipoConta() { return tipoConta; }

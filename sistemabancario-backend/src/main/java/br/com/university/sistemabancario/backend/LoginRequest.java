@@ -3,12 +3,10 @@ package br.com.university.sistemabancario.backend;
 public class LoginRequest {
     private String login;
     private String senha;
-    // Campos adicionados para a validação em cadeia
     private String data;
     private String hora;
     private String codigo;
 
-    // Getters e Setters para todos os campos
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
     public String getSenha() { return senha; }

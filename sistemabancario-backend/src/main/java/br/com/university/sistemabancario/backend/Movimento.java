@@ -25,7 +25,6 @@ public class Movimento {
     @JoinColumn(name = "conta_id")
     private Conta conta;
 
-    // Getters and setters
 
     public Long getId() {
         return id;

@@ -27,12 +27,9 @@ public abstract class Conta {
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movimento> movimentos = new ArrayList<>();
 
-    // Métodos de negócio abstratos
     public abstract void depositar(double valor);
     public abstract void sacar(double valor);
     public abstract String getTipo();
-
-    // --- VERIFIQUE SE TODOS ESTES MÉTODOS GETTERS E SETTERS ESTÃO AQUI ---
 
     public Long getId() {
         return id;
@@ -54,7 +51,6 @@ public abstract class Conta {
         return usuario;
     }
 
-    // Este é o método que provavelmente está faltando
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

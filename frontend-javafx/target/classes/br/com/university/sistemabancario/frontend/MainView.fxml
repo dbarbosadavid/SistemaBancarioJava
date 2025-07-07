@@ -4,16 +4,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>  <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="15.0" prefHeight="400.0" prefWidth="400.0"
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="br.com.university.sistemabancario.frontend.MainViewController">
+<VBox alignment="CENTER" spacing="10.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.university.sistemabancario.frontend.MainViewController">
 
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <Label text="Sistema Bancário">
@@ -22,27 +22,48 @@
         </font>
     </Label>
 
-    <Label text="Tipo de Conta:"/>
-    <ComboBox fx:id="tipoContaComboBox" prefWidth="250.0" promptText="Selecione a conta..."/>
+    <Label text="Usuário:" />
+    <TextField fx:id="usuarioTextField" maxWidth="250.0" promptText="Digite seu usuário" />
+    <Label text="Senha:" />
+    <PasswordField fx:id="senhaPasswordField" maxWidth="250.0" promptText="Digite sua senha" />
+    <Button onAction="#handleLoginAction" text="Login" prefWidth="120.0" />
+    <Label fx:id="statusLoginLabel" />
 
-    <Label text="Valor:"/>
-    <TextField fx:id="valorTextField" maxWidth="250.0" promptText="Digite o valor"/>
+    <VBox fx:id="painelOperacoes" alignment="CENTER" spacing="10.0" managed="false" visible="false">
+        <children>
+            <Label text="Tipo de Conta:">
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin>
+            </Label>
+            <ComboBox fx:id="tipoContaComboBox" prefWidth="250.0" promptText="Selecione a conta..." />
 
-    <Button fx:id="depositarButton" text="Depositar" onAction="#handleDepositarAction" prefWidth="120.0"/>
-    <Button fx:id="sacarButton" text="Sacar" onAction="#handleSacarAction" prefWidth="120.0"/>
+            <Label text="Valor:" />
+            <TextField fx:id="valorTextField" maxWidth="250.0" promptText="Digite o valor da operação" />
 
-    <Label text="Saldo Atual:">
-        <font>
-            <Font name="System Bold" size="16.0" />
-        </font>
-        <VBox.margin>
-            <Insets top="20.0" />
-        </VBox.margin>
-    </Label>
-    
-    <Label fx:id="saldoLabel" text="R$ 0,00" textFill="BLUE">
-        <font>
-            <Font size="20.0" />
-        </font>
-    </Label>
-</VBox>
+            <Label text="ID da Conta de Destino (para Transferência):" />
+            <TextField fx:id="contaDestinoTextField" maxWidth="250.0" promptText="Digite o ID da conta de destino" />
+
+            <HBox alignment="CENTER" spacing="10.0">
+                <children>
+                    <Button onAction="#handleDepositarAction" text="Depositar" prefWidth="100.0" />
+                    <Button onAction="#handleSacarAction" text="Sacar" prefWidth="100.0" />
+                    <Button onAction="#handleTransferirAction" text="Transferir" prefWidth="100.0" />
+                </children>
+                <VBox.margin>
+                    <Insets top="10.0" bottom="10.0" />
+                </VBox.margin>
+            </HBox>
+            
+            <Button onAction="#handleExtratoAction" text="Emitir Extrato" prefWidth="220.0" />
+
+            <Label text="Últimos Movimentos:">
+                <VBox.margin>
+                    <Insets top="15.0" />
+                </VBox.margin>
+            </Label>
+            <TextArea fx:id="extratoTextArea" editable="false" prefHeight="150.0" wrapText="true" />
+
+        </children>
+    </VBox>
+    </VBox>

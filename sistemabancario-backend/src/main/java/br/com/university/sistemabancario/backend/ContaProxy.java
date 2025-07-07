@@ -8,7 +8,7 @@ package br.com.university.sistemabancario.backend;
  *
  * @author aluno
  */
-public class ContaProxy implements Conta {
+public class ContaProxy extends Conta {
     private Conta contaReal;
     private ValidadorUser validador;
 

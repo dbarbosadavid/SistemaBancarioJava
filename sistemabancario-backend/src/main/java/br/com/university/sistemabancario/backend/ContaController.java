@@ -1,50 +1,71 @@
 package br.com.university.sistemabancario.backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
-@RestController 
-@RequestMapping("/api/contas") 
+@RestController
+@RequestMapping("/api/contas")
 public class ContaController {
 
+    @Autowired
+    private ContaService contaService;
 
-    @PostMapping("/depositar") 
-    public OperacaoResponse depositar(@RequestBody OperacaoRequest request) {
-        
-        ValidadorUser validador = new ValidadorUser(); 
-
-
-        Conta conta = new ContaProxy(
-            ContasFactory.criarConta(request.getTipoConta()), //
-            validador
-        ); //
-
-        conta.depositar(request.getValor()); 
-
-
-        return new OperacaoResponse(
-            "Depósito realizado com sucesso!",
-            conta.getTipo(),
-            conta.getSaldo()
-        );
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody LoginRequest loginRequest) {
+        Usuario usuarioAutenticado = contaService.login(loginRequest.getLogin(), loginRequest.getSenha());
+        if (usuarioAutenticado != null) {
+            return ResponseEntity.ok(usuarioAutenticado);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
-    @PostMapping("/sacar") 
-    public OperacaoResponse sacar(@RequestBody OperacaoRequest request) {
-        ValidadorUser validador = new ValidadorUser(); //
-        Conta conta = new ContaProxy(
-            ContasFactory.criarConta(request.getTipoConta()), //
-            validador
-        ); //
+    @PostMapping("/depositar")
+    // O request agora só precisa do ID da conta e do valor
+    public ResponseEntity<OperacaoResponse> depositar(@RequestBody OperacaoRequest request) {
+        Conta contaAtualizada = contaService.realizarDeposito(request.getContaId(), request.getValor());
+        return ResponseEntity.ok(new OperacaoResponse("Depósito realizado com sucesso!", contaAtualizada.getTipo(), contaAtualizada.getSaldo()));
+    }
 
-        conta.sacar(request.getValor()); 
+    @PostMapping("/sacar")
+    // O request agora só precisa do ID da conta e do valor
+    public ResponseEntity<OperacaoResponse> sacar(@RequestBody OperacaoRequest request) {
+        Conta contaAtualizada = contaService.realizarSaque(request.getContaId(), request.getValor());
+        return ResponseEntity.ok(new OperacaoResponse("Saque realizado com sucesso!", contaAtualizada.getTipo(), contaAtualizada.getSaldo()));
+    }
 
-        return new OperacaoResponse(
-            "Saque realizado com sucesso!",
-            conta.getTipo(),
-            conta.getSaldo()
-        );
+        @PostMapping("/transferir")
+    public ResponseEntity<Void> transferir(@RequestBody TransferenciaRequest request) {
+        try {
+            contaService.realizarTransferencia(
+                request.getIdContaOrigem(), 
+                request.getIdContaDestino(), 
+                request.getValor()
+            );
+            // Retorna 200 OK se a transferência for bem-sucedida
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // Em caso de erro (ex: conta não encontrada, saldo insuficiente),
+            // retorna um erro 400 Bad Request com a mensagem do erro.
+            return ResponseEntity.badRequest().header("error-message", e.getMessage()).build();
+        }
+    }
+
+    @GetMapping("/{contaId}/extrato")
+    public ResponseEntity<List<Movimento>> getExtrato(@PathVariable Long contaId) {
+        try {
+            List<Movimento> extrato = contaService.getExtrato(contaId);
+            return ResponseEntity.ok(extrato);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

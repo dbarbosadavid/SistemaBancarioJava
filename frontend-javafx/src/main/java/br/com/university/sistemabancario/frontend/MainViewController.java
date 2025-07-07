@@ -10,6 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Observable;
@@ -28,8 +30,6 @@ public class MainViewController implements Observer {
     @FXML private Label saldoLabel;
     @FXML private TextField contaDestinoTextField;
     @FXML private TextArea extratoTextArea;
-    @FXML private TextField dataTextField;
-    @FXML private TextField horaTextField;
     @FXML private TextField codigoTextField;
 
     // --- Variáveis de Lógica e Estado ---
@@ -56,16 +56,19 @@ public class MainViewController implements Observer {
     // Pega os dados de TODOS os campos
     String login = usuarioTextField.getText();
     String senha = senhaPasswordField.getText();
-    String data = dataTextField.getText();
-    String hora = horaTextField.getText();
     String codigo = codigoTextField.getText();
+
+    DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DateTimeFormatter formatadorHora = DateTimeFormatter.ofPattern("HH:mm");
+    String dataAtual = LocalDateTime.now().format(formatadorData);
+    String horaAtual = LocalDateTime.now().format(formatadorHora);
 
     // Cria o objeto de requisição completo
     LoginRequest request = new LoginRequest();
     request.setLogin(login);
     request.setSenha(senha);
-    request.setData(data);
-    request.setHora(hora);
+    request.setData(dataAtual);   
+    request.setHora(horaAtual);   
     request.setCodigo(codigo);
 
     // O resto do método continua igual...

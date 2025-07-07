@@ -29,6 +29,15 @@
     <Button onAction="#handleLoginAction" text="Login" prefWidth="120.0" />
     <Label fx:id="statusLoginLabel" />
 
+    <Label text="Data (DD/MM/AAAA):" />
+        <TextField fx:id="dataTextField" maxWidth="250.0" promptText="Ex: 07/07/2025" />
+        <Label text="Hora (HH:MM):" />
+        <TextField fx:id="horaTextField" maxWidth="250.0" promptText="Ex: 23:59" />
+        <Label text="Código:" />
+    <TextField fx:id="codigoTextField" maxWidth="250.0" promptText="Digite o código" />
+
+    <Button onAction="#handleLoginAction" text="Login" prefWidth="120.0" /> 
+
     <VBox fx:id="painelOperacoes" alignment="CENTER" spacing="10.0" managed="false" visible="false">
         <children>
             <Label text="Tipo de Conta:">

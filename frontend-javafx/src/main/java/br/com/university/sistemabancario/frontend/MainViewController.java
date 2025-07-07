@@ -28,6 +28,9 @@ public class MainViewController implements Observer {
     @FXML private Label saldoLabel;
     @FXML private TextField contaDestinoTextField;
     @FXML private TextArea extratoTextArea;
+    @FXML private TextField dataTextField;
+    @FXML private TextField horaTextField;
+    @FXML private TextField codigoTextField;
 
     // --- Variáveis de Lógica e Estado ---
     private final ApiClient apiClient = new ApiClient();
@@ -48,38 +51,36 @@ public class MainViewController implements Observer {
     /**
      * Chamado quando o botão de Login é clicado.
      */
-    @FXML
+@FXML
     private void handleLoginAction() {
-        String login = usuarioTextField.getText();
-        String senha = senhaPasswordField.getText();
+    // Pega os dados de TODOS os campos
+    String login = usuarioTextField.getText();
+    String senha = senhaPasswordField.getText();
+    String data = dataTextField.getText();
+    String hora = horaTextField.getText();
+    String codigo = codigoTextField.getText();
 
-        if (login.isEmpty() || senha.isEmpty()) {
-            exibirAlerta("Erro de Login", "Usuário e senha não podem estar vazios.");
-            return;
-        }
+    // Cria o objeto de requisição completo
+    LoginRequest request = new LoginRequest();
+    request.setLogin(login);
+    request.setSenha(senha);
+    request.setData(data);
+    request.setHora(hora);
+    request.setCodigo(codigo);
 
-        LoginRequest request = new LoginRequest();
-        request.setLogin(login);
-        request.setSenha(senha);
-
-        try {
-            this.usuarioLogado = apiClient.login(request);
-            
-            statusLoginLabel.setText("Login bem-sucedido! Bem-vindo, " + usuarioLogado.getLogin() + "!");
-            statusLoginLabel.setTextFill(Color.GREEN);
-            
-            // Torna o painel de operações visível e habilitado
-            painelOperacoes.setVisible(true);
-            painelOperacoes.setManaged(true);
-            
-            popularContasComboBox();
-
-        } catch (Exception e) {
-            exibirAlerta("Falha no Login", "Não foi possível autenticar: " + e.getMessage());
-            statusLoginLabel.setText("Falha no login.");
-            statusLoginLabel.setTextFill(Color.RED);
-        }
+    // O resto do método continua igual...
+    try {
+        this.usuarioLogado = apiClient.login(request);
+        statusLoginLabel.setText("Login bem-sucedido! Bem-vindo, " + usuarioLogado.getLogin() + "!");
+        statusLoginLabel.setTextFill(Color.GREEN);
+        setOperacoesHabilitadas(true);
+        popularContasComboBox();
+    } catch (Exception e) {
+        exibirAlerta("Falha no Login", "Não foi possível autenticar: " + e.getMessage());
+        statusLoginLabel.setText("Falha no login.");
+        statusLoginLabel.setTextFill(Color.RED);
     }
+}
 
     /**
      * Chamado quando o botão de Depositar é clicado.
@@ -279,5 +280,18 @@ private void handleExtratoAction() {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
+    }
+
+    /**
+     * Habilita ou desabilita todos os controles da área de operações,
+     * mostrando ou escondendo o painel que os contém.
+     * @param habilitar 'true' para mostrar e habilitar, 'false' para esconder e desabilitar.
+     */
+    private void setOperacoesHabilitadas(boolean habilitar) {
+        // A verificação '!= null' é uma segurança extra.
+        if (painelOperacoes != null) {
+            painelOperacoes.setVisible(habilitar);
+            painelOperacoes.setManaged(habilitar); // 'setManaged' remove o espaço em branco quando está invisível
+        }
     }
 }

@@ -5,14 +5,11 @@ import java.util.List;
 public class Usuario {
     private Long id;
     private String login;
-    // O nome do campo "contas" deve ser idêntico ao que está no JSON
     private List<Conta> contas;
 
-    // Construtor padrão
     public Usuario() {
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getLogin() { return login; }

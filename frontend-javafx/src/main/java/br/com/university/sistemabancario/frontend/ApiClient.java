@@ -102,9 +102,9 @@ public void transferir(TransferenciaRequest requestData) throws Exception {
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-    // Se a resposta não for 200 OK, o back-end enviou um erro (ex: saldo insuficiente)
+
     if (response.statusCode() != 200) {
-        // Pega a mensagem de erro que o controller enviou no cabeçalho
+
         String errorMessage = response.headers().firstValue("error-message").orElse("Erro desconhecido.");
         throw new RuntimeException(errorMessage);
     }
@@ -114,7 +114,7 @@ public void transferir(TransferenciaRequest requestData) throws Exception {
     HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(backendUrl + "/" + contaId + "/extrato"))
             .header("Content-Type", "application/json")
-            .GET() // Requisição do tipo GET
+            .GET() 
             .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

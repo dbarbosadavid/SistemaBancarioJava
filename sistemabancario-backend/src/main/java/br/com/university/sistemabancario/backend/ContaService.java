@@ -18,12 +18,42 @@ public class ContaService {
     @Autowired
     private MovimentoRepository movimentoRepository;
 
-    public Usuario login(String login, String senha) {
-        // ... método de login não muda ...
-        Usuario usuario = usuarioRepository.findByLogin(login);
-        if (usuario != null && usuario.getSenha().equals(senha)) {
-            return usuario;
+    public Usuario login(String login, String senha, String data, String hora, String codigo) {
+        // 1. Cria o objeto com os dados a serem validados
+        ValidationRequest validationRequest = new ValidationRequest();
+        validationRequest.setNome(login);
+        validationRequest.setSenha(senha);
+        validationRequest.setData(data);
+        validationRequest.setHora(hora);
+        validationRequest.setCodigo(codigo);
+
+        // 2. Cria os "funcionários" da nossa linha de montagem
+        AbstractValidationHandler nomeValidator = new NomeValidatorHandler();
+        AbstractValidationHandler senhaValidator = new SenhaValidatorHandler();
+        AbstractValidationHandler dataValidator = new DataValidatorHandler();
+        AbstractValidationHandler horaValidator = new HoraValidatorHandler();
+        AbstractValidationHandler codigoValidator = new CodigoValidatorHandler();
+
+        // 3. Monta a corrente, ligando um ao outro
+        nomeValidator.setNext(senhaValidator)
+                     .setNext(dataValidator)
+                     .setNext(horaValidator)
+                     .setNext(codigoValidator);
+
+        // 4. Inicia a validação no primeiro da corrente
+        boolean isValidationSuccessful = nomeValidator.handle(validationRequest);
+
+        // 5. Só continua para o login no banco de dados se a validação passar
+        if (isValidationSuccessful) {
+            System.out.println("Todas as validações iniciais passaram. Prosseguindo para o login no banco...");
+            Usuario usuario = usuarioRepository.findByLogin(login);
+            if (usuario != null && usuario.getSenha().equals(senha)) {
+                System.out.println("Login bem-sucedido para o usuário: " + login);
+                return usuario;
+            }
         }
+
+        System.out.println("Falha na validação ou na autenticação.");
         return null;
     }
 

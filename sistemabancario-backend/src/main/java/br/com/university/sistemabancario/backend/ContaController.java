@@ -18,15 +18,25 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
-    @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody LoginRequest loginRequest) {
-        Usuario usuarioAutenticado = contaService.login(loginRequest.getLogin(), loginRequest.getSenha());
-        if (usuarioAutenticado != null) {
-            return ResponseEntity.ok(usuarioAutenticado);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+@PostMapping("/login")
+public ResponseEntity<Usuario> login(@RequestBody LoginRequest loginRequest) {
+    // Chama o novo método login no serviço, passando todos os 5 parâmetros
+    Usuario usuarioAutenticado = contaService.login(
+        loginRequest.getLogin(),
+        loginRequest.getSenha(),
+        loginRequest.getData(),
+        loginRequest.getHora(),
+        loginRequest.getCodigo()
+    );
+
+    if (usuarioAutenticado != null) {
+        // Se a validação e a autenticação passarem, retorna 200 OK
+        return ResponseEntity.ok(usuarioAutenticado);
+    } else {
+        // Se falhar, retorna 401 Unauthorized
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+}
 
     @PostMapping("/depositar")
     // O request agora só precisa do ID da conta e do valor

@@ -1,13 +1,12 @@
-### 4. Transferir 150 da Conta Corrente (ID 1) para a Conta Poupança (ID 2)
+### Teste do Novo Login com Validação em Cadeia
 # @insecure
-POST https://localhost:8443/api/contas/transferir
+POST https://localhost:8443/api/contas/login
 Content-Type: application/json
 
 {
-    "idContaOrigem": 1,
-    "idContaDestino": 2,
-    "valor": 150
+    "login": "bruno",
+    "senha": "123",
+    "data": "07/07/2025",
+    "hora": "00:00",
+    "codigo": "ABCDE"
 }
-### 5. Emitir extrato da Conta Corrente (ID 1)
-# @insecure
-GET https://localhost:8443/api/contas/1/extrato

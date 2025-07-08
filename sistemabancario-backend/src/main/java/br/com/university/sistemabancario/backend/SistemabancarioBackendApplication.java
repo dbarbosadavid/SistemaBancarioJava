@@ -38,6 +38,47 @@ public CommandLineRunner initialData(UsuarioRepository usuarioRepository, ContaR
 
             System.out.println("Usuário 'bruno' e suas contas foram criados com sucesso.");
         }
+      
+        if (usuarioRepository.findByLogin("david") == null) {
+            Usuario novoUsuario = new Usuario();
+            novoUsuario.setLogin("david");
+            novoUsuario.setSenha("123");
+            novoUsuario.setContas(new java.util.ArrayList<>());
+
+
+            ContaCorrente contaC = new ContaCorrente();
+            contaC.setUsuario(novoUsuario);
+            contaC.setSaldo(2000.0); 
+            novoUsuario.getContas().add(contaC);
+
+
+            ContaPoupanca contaP = new ContaPoupanca();
+            contaP.setUsuario(novoUsuario);
+            contaP.setSaldo(1500.0); 
+            novoUsuario.getContas().add(contaP);
+
+            usuarioRepository.save(novoUsuario);
+
+            System.out.println("Usuário 'David' e suas contas foram criados com sucesso.");
+        }
+       
+        if (usuarioRepository.findByLogin("igor") == null) {
+            Usuario novoUsuario = new Usuario();
+            novoUsuario.setLogin("igor");
+            novoUsuario.setSenha("123");
+            novoUsuario.setContas(new java.util.ArrayList<>());
+
+
+            ContaSalario contaS = new ContaSalario();
+            contaS.setUsuario(novoUsuario);
+            contaS.setSaldo(2000.0); 
+            novoUsuario.getContas().add(contaS);
+
+
+            usuarioRepository.save(novoUsuario);
+
+            System.out.println("Usuário 'Igor' e suaa conta salario foi criada com sucesso.");
+        }
     };
 }
 }

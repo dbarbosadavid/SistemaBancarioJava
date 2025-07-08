@@ -23,7 +23,7 @@ public class ContaCorrente extends Conta {
         if (getSaldo() >= valor) {
             setSaldo(getSaldo() - valor);
         } else {
-            System.out.println("Saldo insuficiente na Conta Corrente.");
+            throw new OperacaoException("Saldo insuficiente na Conta Corrente.");
         }
     }
 

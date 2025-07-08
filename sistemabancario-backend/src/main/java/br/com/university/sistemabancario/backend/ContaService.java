@@ -62,10 +62,10 @@ public class ContaService {
         // 1. Busca as contas de origem e destino no banco de dados.
         //    O .orElseThrow garante que a operação falhe se uma das contas não for encontrada.
         Conta contaOrigem = contaRepository.findById(idContaOrigem)
-                .orElseThrow(() -> new RuntimeException("Conta de origem não encontrada!"));
+                .orElseThrow(() -> new OperacaoException("Conta de origem não encontrada!"));
 
         Conta contaDestino = contaRepository.findById(idContaDestino)
-                .orElseThrow(() -> new RuntimeException("Conta de destino não encontrada!"));
+                .orElseThrow(() -> new OperacaoException("Conta de destino não encontrada!"));
 
         // 2. Executa a lógica de negócio (o método sacar já verifica o saldo)
         contaOrigem.sacar(valor);
@@ -140,7 +140,7 @@ public class ContaService {
         public List<Movimento> getExtrato(Long contaId) {
         // Busca a conta pelo ID. Se não encontrar, lança um erro.
         Conta conta = contaRepository.findById(contaId)
-                .orElseThrow(() -> new RuntimeException("Conta com ID " + contaId + " não encontrada"));
+                .orElseThrow(() -> new OperacaoException("Conta com ID " + contaId + " não encontrada"));
 
         // Retorna a lista de movimentos que já está associada à conta.
         // O FetchType.EAGER que configuramos antes ajuda aqui.

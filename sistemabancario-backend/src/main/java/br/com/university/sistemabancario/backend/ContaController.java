@@ -52,30 +52,21 @@ public ResponseEntity<Usuario> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(new OperacaoResponse("Saque realizado com sucesso!", contaAtualizada.getTipo(), contaAtualizada.getSaldo()));
     }
 
-        @PostMapping("/transferir")
-    public ResponseEntity<Void> transferir(@RequestBody TransferenciaRequest request) {
-        try {
-            contaService.realizarTransferencia(
-                request.getIdContaOrigem(), 
-                request.getIdContaDestino(), 
-                request.getValor()
-            );
-            // Retorna 200 OK se a transferência for bem-sucedida
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            // Em caso de erro (ex: conta não encontrada, saldo insuficiente),
-            // retorna um erro 400 Bad Request com a mensagem do erro.
-            return ResponseEntity.badRequest().header("error-message", e.getMessage()).build();
-        }
-    }
+ // O método agora fica mais limpo e delega o tratamento de erro
+@PostMapping("/transferir")
+public ResponseEntity<Void> transferir(@RequestBody TransferenciaRequest request) {
+    contaService.realizarTransferencia(
+        request.getIdContaOrigem(), 
+        request.getIdContaDestino(), 
+        request.getValor()
+    );
+    // Se nenhuma exceção for lançada, retorna 200 OK
+    return ResponseEntity.ok().build();
+}
 
     @GetMapping("/{contaId}/extrato")
     public ResponseEntity<List<Movimento>> getExtrato(@PathVariable Long contaId) {
-        try {
-            List<Movimento> extrato = contaService.getExtrato(contaId);
-            return ResponseEntity.ok(extrato);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Movimento> extrato = contaService.getExtrato(contaId);
+        return ResponseEntity.ok(extrato);
     }
 }

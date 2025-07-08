@@ -1,0 +1,13 @@
+br\com\university\sistemabancario\frontend\ApiClient$1.class
+br\com\university\sistemabancario\frontend\ApiClient$2.class
+br\com\university\sistemabancario\frontend\LoginRequest.class
+br\com\university\sistemabancario\frontend\OperacaoResponse.class
+br\com\university\sistemabancario\frontend\MainApp.class
+br\com\university\sistemabancario\frontend\OperacaoRequest.class
+br\com\university\sistemabancario\frontend\TransferenciaRequest.class
+br\com\university\sistemabancario\frontend\Usuario.class
+br\com\university\sistemabancario\frontend\ApiClient.class
+br\com\university\sistemabancario\frontend\MainViewController.class
+br\com\university\sistemabancario\frontend\Movimento.class
+br\com\university\sistemabancario\frontend\Conta.class
+br\com\university\sistemabancario\frontend\ContaViewModel.class

@@ -57,7 +57,6 @@ public class ApiClient {
         return objectMapper.readValue(response.body(), Usuario.class);
     }
 
-    // --- MÉTODO DEPOSITAR ADICIONADO ---
     public OperacaoResponse depositar(OperacaoRequest requestData) throws Exception {
         String requestBody = objectMapper.writeValueAsString(requestData);
         HttpRequest request = HttpRequest.newBuilder()
@@ -69,13 +68,11 @@ public class ApiClient {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
-            throw new RuntimeException("Falha na requisição: " + response.statusCode());
+            throw new RuntimeException(response.body());
         }
-        // Retorna o objeto de resposta completo que o back-end envia
         return objectMapper.readValue(response.body(), OperacaoResponse.class);
     }
 
-    // --- MÉTODO SACAR ADICIONADO ---
     public OperacaoResponse sacar(OperacaoRequest requestData) throws Exception {
         String requestBody = objectMapper.writeValueAsString(requestData);
         HttpRequest request = HttpRequest.newBuilder()
@@ -87,7 +84,7 @@ public class ApiClient {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         
         if (response.statusCode() != 200) {
-            throw new RuntimeException("Falha na requisição: " + response.statusCode());
+            throw new RuntimeException(response.body());
         }
         return objectMapper.readValue(response.body(), OperacaoResponse.class);
     }
@@ -102,11 +99,8 @@ public void transferir(TransferenciaRequest requestData) throws Exception {
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-
     if (response.statusCode() != 200) {
-
-        String errorMessage = response.headers().firstValue("error-message").orElse("Erro desconhecido.");
-        throw new RuntimeException(errorMessage);
+        throw new RuntimeException(response.body());
     }
 }
 
@@ -123,7 +117,6 @@ public void transferir(TransferenciaRequest requestData) throws Exception {
         throw new RuntimeException("Falha ao buscar extrato: " + response.statusCode());
     }
 
-    // Converte a resposta JSON em uma Lista de Movimentos
     return objectMapper.readValue(response.body(), new TypeReference<List<Movimento>>() {});
 }
 }

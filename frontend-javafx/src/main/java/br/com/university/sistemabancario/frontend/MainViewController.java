@@ -156,10 +156,17 @@ private void handleTransferirAction() {
         request.setValor(valor);
 
         // Chama a API
-        apiClient.transferir(request);
+        try{
+            apiClient.transferir(request);
 
 
-        exibirAlerta("Sucesso", "Transferência realizada com sucesso!");
+            exibirAlerta("Sucesso", "Transferência realizada com sucesso!");
+
+        }catch (Exception e){
+            exibirAlerta("Saldo Insuficiente", "Saldo Insuficiente!!!");
+        }
+        
+        
 
 
         valorTextField.clear();

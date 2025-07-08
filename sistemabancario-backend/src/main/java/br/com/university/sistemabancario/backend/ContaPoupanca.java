@@ -24,7 +24,7 @@ public class ContaPoupanca extends Conta {
         if (getSaldo() >= valor) {
             setSaldo(getSaldo() - valor);
         } else {
-            System.out.println("Saldo insuficiente na Conta Poupanca.");
+            throw new OperacaoException("Saldo insuficiente na Conta Poupança.");
         }
     }
 

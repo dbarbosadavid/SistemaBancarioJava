@@ -51,8 +51,8 @@ A janela da aplicação de desktop irá aparecer, pronta para se comunicar com o
 
 ## Autores
 
-* [Nome do Integrante 1]
-* [Nome do Integrante 2]
-* ...
+* [David Barbosa Araujo]
+* [Bruno Loureiro Melo]
+* [Igor Mateus Teles]
 
 *Projeto desenvolvido em: 29 de junho de 2025*

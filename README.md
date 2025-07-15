@@ -1,7 +1,7 @@
 Projeto feito em colaboração:
-dbarbosadavid (username)
-Brunolm (username)
-igormteles (username)
+*dbarbosadavid (username)
+*Brunolm (username)
+*igormteles (username)
 
 # Sistema Bancário Completo - Cliente/Servidor em Java
 
